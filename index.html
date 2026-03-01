@@ -389,10 +389,10 @@ body {
         <input type="checkbox">
         <span>Keep me signed in</span>
       </label>
-      <button class="mm-forgot" type="button">Forgot password?</button>
+      <a href="https://mlogistics.nivotech.com.ng/my-account/lost-password/" class="mm-forgot">Forgot password?</a>
     </div>
 
-    <button class="mm-btn" type="button">Sign In</button>
+    <a href="https://mlogistics.nivotech.com.ng/my-account/" class="mm-btn" style="text-decoration:none !important; display:block !important;">Sign In</a>
     <div class="mm-div"><span>or</span></div>
     <span class="mm-sw">No account? <a onclick="mmSwitch('signup')">Create one &#8594;</a></span>
   </div>
@@ -462,15 +462,15 @@ body {
       <span>I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a> of M&amp;M Logistics.</span>
     </div>
 
-    <button class="mm-btn" type="button">Create My Account</button>
+    <a href="https://mlogistics.nivotech.com.ng/my-account/?action=register" class="mm-btn" style="text-decoration:none !important; display:block !important;">Create My Account</a>
     <div class="mm-div"><span>or</span></div>
     <span class="mm-sw">Have an account? <a onclick="mmSwitch('login')">Sign in &#8594;</a></span>
   </div>
 
-  <span class="mm-foot">&#169; 2026 M&amp;M Logistics &#183; support@mmlogistics.com</span>
+  <span class="mm-foot">&#169; 2026 M&amp;M Logistics &#183; <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="7704020707180503371a1a1b18101e04031e14045914181a">[email&#160;protected]</a></span>
 </div>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 function mmSwitch(t) {
   document.querySelectorAll('.mm-panel').forEach(function(p){ p.classList.remove('on'); });
   document.querySelectorAll('.mm-tab').forEach(function(b){ b.classList.remove('on'); });
@@ -499,13 +499,4 @@ function mmStr(inp) {
   if (/[A-Z]/.test(v)) s++;
   if (/[0-9]/.test(v)) s++;
   if (/[^A-Za-z0-9]/.test(v)) s++;
-  var lvls = [{p:'25%',c:'#e05555',l:'Weak'},{p:'50%',c:'#e09455',l:'Fair'},{p:'75%',c:'#d4c06a',l:'Good'},{p:'100%',c:'#2e7d52',l:'Strong'}];
-  var lv = lvls[s-1] || lvls[0];
-  fill.style.width = lv.p;
-  fill.style.backgroundColor = lv.c;
-  txt.textContent = lv.l;
-  txt.style.color = lv.c;
-}
-</script>
-</body>
-</html>
+  var lvls = [{p:'25%',c:'#e05555',l:'Weak'},{p:'50%',c:'#e09455',l:'Fair'},{p:'75%',c
