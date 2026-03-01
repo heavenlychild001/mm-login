@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>M&amp;M Logistics Portal</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+#mmwrap,
+#mmwrap *,
+#mmwrap *::before,
+#mmwrap *::after {
+  box-sizing: border-box !important;
+  font-family: 'Outfit', sans-serif !important;
+}
+
+#mmwrap {
+  background-color: #1a1f1e !important;
+  min-height: 100vh !important;
+  width: 100vw !important;
+  margin: 0 !important;
+  padding: 40px 16px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  z-index: 99999 !important;
+}
+
+.mm-card {
+  background-color: #242a29 !important;
+  border: 1px solid rgba(255,255,255,0.1) !important;
+  border-radius: 20px !important;
+  padding: 44px 40px !important;
+  width: 100% !important;
+  max-width: 440px !important;
+  margin: 0 auto !important;
+}
+
+/* LOGO */
+.mm-logo-wrap {
+  display: flex !important;
+  justify-content: center !important;
+  margin: 0 0 12px 0 !important;
+  padding: 0 !important;
+}
+
+/* BRAND */
+.mm-brand {
+  display: block !important;
+  text-align: center !important;
+  font-family: 'Playfair Display', serif !important;
+  font-size: 22px !important;
+  font-weight: 700 !important;
+  color: #f0ede8 !important;
+  margin: 0 0 4px 0 !important;
+  padding: 0 !important;
+}
+
+.mm-sub {
+  display: block !important;
+  text-align: center !important;
+  font-size: 10px !important;
+  letter-spacing: 3px !important;
+  text-transform: uppercase !important;
+  color: #4caf6e !important;
+  margin: 0 0 30px 0 !important;
+  padding: 0 !important;
+}
+
+/* TABS */
+.mm-tabs {
+  display: flex !important;
+  background-color: rgba(0,0,0,0.3) !important;
+  border-radius: 10px !important;
+  padding: 4px !important;
+  margin: 0 0 28px 0 !important;
+  border: 1px solid rgba(255,255,255,0.06) !important;
+  gap: 0 !important;
+}
+
+.mm-tab {
+  flex: 1 !important;
+  padding: 10px !important;
+  background: transparent !important;
+  border: none !important;
+  border-radius: 7px !important;
+  font-size: 12px !important;
+  font-weight: 600 !important;
+  letter-spacing: 1.5px !important;
+  text-transform: uppercase !important;
+  color: #7a8280 !important;
+  cursor: pointer !important;
+  transition: all 0.2s !important;
+  outline: none !important;
+  margin: 0 !important;
+}
+
+.mm-tab.on {
+  background-color: #2e7d52 !important;
+  color: #ffffff !important;
+  box-shadow: 0 2px 8px rgba(46,125,82,0.4) !important;
+}
+
+/* PANELS */
+.mm-panel { display: none !important; }
+.mm-panel.on { display: block !important; }
+
+.mm-h1 {
+  display: block !important;
+  font-family: 'Playfair Display', serif !important;
+  font-size: 26px !important;
+  font-weight: 700 !important;
+  color: #f0ede8 !important;
+  margin: 0 0 6px 0 !important;
+  padding: 0 !important;
+}
+
+.mm-p {
+  display: block !important;
+  font-size: 13px !important;
+  color: #7a8280 !important;
+  font-weight: 300 !important;
+  line-height: 1.6 !important;
+  margin: 0 0 22px 0 !important;
+  padding: 0 !important;
+}
+
+/* FIELD */
+.mm-field {
+  margin: 0 0 16px 0 !important;
+  padding: 0 !important;
+}
+
+.mm-2col {
+  display: grid !important;
+  grid-template-columns: 1fr 1fr !important;
+  gap: 12px !important;
+  margin: 0 0 0 0 !important;
+}
+
+.mm-lbl {
+  display: block !important;
+  font-size: 10px !important;
+  letter-spacing: 2px !important;
+  text-transform: uppercase !important;
+  color: #7a8280 !important;
+  font-weight: 600 !important;
+  margin: 0 0 6px 0 !important;
+  padding: 0 !important;
+}
+
+.mm-ibox {
+  position: relative !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.mm-ibox input {
+  display: block !important;
+  width: 100% !important;
+  background-color: #ffffff !important;
+  border: 2px solid #e0e0e0 !important;
+  border-radius: 8px !important;
+  padding: 13px 14px 13px 40px !important;
+  font-size: 14px !important;
+  color: #1a1f1e !important;
+  outline: none !important;
+  margin: 0 !important;
+  box-shadow: none !important;
+  -webkit-appearance: none !important;
+  appearance: none !important;
+}
+
+.mm-ibox input::placeholder {
+  color: #aaaaaa !important;
+}
+
+.mm-ibox input:focus {
+  border-color: #2e7d52 !important;
+  box-shadow: 0 0 0 3px rgba(46,125,82,0.15) !important;
+}
+
+.mm-ico {
+  position: absolute !important;
+  left: 13px !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  font-size: 14px !important;
+  pointer-events: none !important;
+  line-height: 1 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  z-index: 1 !important;
+}
+
+.mm-eye {
+  position: absolute !important;
+  right: 12px !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  background: none !important;
+  border: none !important;
+  cursor: pointer !important;
+  font-size: 14px !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  line-height: 1 !important;
+  color: #aaaaaa !important;
+  outline: none !important;
+}
+
+/* CHECK ROW */
+.mm-crow {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  margin: 0 0 20px 0 !important;
+  padding: 0 !important;
+  flex-wrap: wrap !important;
+  gap: 8px !important;
+}
+
+.mm-chk {
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  cursor: pointer !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.mm-chk input[type=checkbox] {
+  width: 16px !important;
+  height: 16px !important;
+  accent-color: #2e7d52 !important;
+  cursor: pointer !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  background-color: #ffffff !important;
+  border: 2px solid #e0e0e0 !important;
+  border-radius: 3px !important;
+  flex-shrink: 0 !important;
+  display: block !important;
+}
+
+.mm-chk span {
+  font-size: 12px !important;
+  color: #9a9f9e !important;
+}
+
+.mm-forgot {
+  font-size: 12px !important;
+  color: #9a9f9e !important;
+  cursor: pointer !important;
+  background: none !important;
+  border: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  outline: none !important;
+}
+
+/* TERMS */
+.mm-terms {
+  display: flex !important;
+  align-items: flex-start !important;
+  gap: 10px !important;
+  margin: 0 0 20px 0 !important;
+  padding: 0 !important;
+}
+
+.mm-terms input[type=checkbox] {
+  width: 16px !important;
+  height: 16px !important;
+  accent-color: #2e7d52 !important;
+  margin: 2px 0 0 0 !important;
+  padding: 0 !important;
+  cursor: pointer !important;
+  flex-shrink: 0 !important;
+  display: block !important;
+  background-color: #ffffff !important;
+}
+
+.mm-terms span {
+  font-size: 12px !important;
+  color: #9a9f9e !important;
+  line-height: 1.6 !important;
+}
+
+.mm-terms a {
+  color: #4caf6e !important;
+  text-decoration: none !important;
+}
+
+/* PASSWORD STRENGTH */
+.mm-str { display: none !important; margin: 8px 0 0 0 !important; padding: 0 !important; }
+.mm-str.on { display: block !important; }
+.mm-strbar {
+  height: 4px !important;
+  background-color: #e0e0e0 !important;
+  border-radius: 2px !important;
+  margin: 0 0 5px 0 !important;
+  overflow: hidden !important;
+}
+.mm-strfill {
+  height: 100% !important;
+  border-radius: 2px !important;
+  width: 0% !important;
+  transition: width 0.3s, background-color 0.3s !important;
+}
+.mm-strtxt {
+  font-size: 10px !important;
+  letter-spacing: 1px !important;
+  text-transform: uppercase !important;
+  color: #aaaaaa !important;
+  display: block !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+/* BIG GREEN BUTTON */
+.mm-btn {
+  display: block !important;
+  width: 100% !important;
+  padding: 15px !important;
+  background-color: #2e7d52 !important;
+  color: #ffffff !important;
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  letter-spacing: 2px !important;
+  text-transform: uppercase !important;
+  border: none !important;
+  border-radius: 10px !important;
+  cursor: pointer !important;
+  transition: background-color 0.2s, transform 0.2s !important;
+  outline: none !important;
+  margin: 0 !important;
+  box-shadow: 0 4px 14px rgba(46,125,82,0.35) !important;
+  text-align: center !important;
+}
+
+.mm-btn:hover {
+  background-color: #256644 !important;
+  transform: translateY(-1px) !important;
+}
+
+/* DIVIDER */
+.mm-div {
+  display: flex !important;
+  align-items: center !important;
+  gap: 12px !important;
+  margin: 18px 0 !important;
+  padding: 0 !important;
+}
+.mm-div::before,
+.mm-div::after {
+  content: '' !important;
+  flex: 1 !important;
+  height: 1px !important;
+  background-color: rgba(255,255,255,0.08) !important;
+}
+.mm-div span {
+  font-size: 11px !important;
+  color: #7a8280 !important;
+}
+
+/* SWITCH */
+.mm-sw {
+  display: block !important;
+  text-align: center !important;
+  font-size: 13px !important;
+  color: #7a8280 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+.mm-sw a {
+  color: #4caf6e !important;
+  font-weight: 600 !important;
+  cursor: pointer !important;
+  text-decoration: none !important;
+  background: none !important;
+  border: none !important;
+}
+
+/* FOOTER */
+.mm-foot {
+  display: block !important;
+  text-align: center !important;
+  font-size: 10px !important;
+  color: rgba(255,255,255,0.2) !important;
+  margin: 24px 0 0 0 !important;
+  padding: 0 !important;
+  letter-spacing: 1px !important;
+}
+
+@media (max-width: 480px) {
+  .mm-card { padding: 32px 20px !important; }
+  .mm-2col { grid-template-columns: 1fr !important; }
+}
+</style>
+</head>
+<body>
+<div id="mmwrap">
+<div class="mm-card">
+
+  <!-- LOGO -->
+  <div class="mm-logo-wrap">
+    <svg width="76" height="76" viewBox="0 0 160 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="80" cy="80" r="74" stroke="#f0ede8" stroke-width="3"/>
+      <rect x="7" y="54" width="4" height="52" rx="2" fill="#f0ede8"/>
+      <rect x="149" y="54" width="4" height="52" rx="2" fill="#f0ede8"/>
+      <rect x="54" y="7" width="52" height="4" rx="2" fill="#f0ede8"/>
+      <rect x="54" y="149" width="52" height="4" rx="2" fill="#f0ede8"/>
+      <text x="80" y="95" text-anchor="middle" font-family="Georgia,serif" font-size="44" font-weight="700" fill="#f0ede8">M&amp;M</text>
+    </svg>
+  </div>
+
+  <span class="mm-brand">M&amp;M Logistics</span>
+  <span class="mm-sub">Client Portal</span>
+
+  <!-- TABS -->
+  <div class="mm-tabs">
+    <button class="mm-tab on" onclick="mmSwitch('login')">Sign In</button>
+    <button class="mm-tab" onclick="mmSwitch('signup')">Sign Up</button>
+  </div>
+
+  <!-- LOGIN PANEL -->
+  <div class="mm-panel on" id="mm-login">
+    <span class="mm-h1">Welcome Back</span>
+    <span class="mm-p">Sign in to manage your shipments and orders.</span>
+
+    <div class="mm-field">
+      <span class="mm-lbl">Email Address</span>
+      <div class="mm-ibox">
+        <span class="mm-ico">&#9993;</span>
+        <input type="email" placeholder="you@company.com">
+      </div>
+    </div>
+
+    <div class="mm-field">
+      <span class="mm-lbl">Password</span>
+      <div class="mm-ibox">
+        <span class="mm-ico">&#128274;</span>
+        <input type="password" id="lpw" placeholder="Enter your password">
+        <button class="mm-eye" onclick="mmEye('lpw',this)" type="button">&#128065;</button>
+      </div>
+    </div>
+
+    <div class="mm-crow">
+      <label class="mm-chk">
+        <input type="checkbox">
+        <span>Keep me signed in</span>
+      </label>
+      <button class="mm-forgot" type="button">Forgot password?</button>
+    </div>
+
+    <button class="mm-btn" type="button">Sign In</button>
+
+    <div class="mm-div"><span>or</span></div>
+    <span class="mm-sw">No account? <a onclick="mmSwitch('signup')">Create one &#8594;</a></span>
+  </div>
+
+  <!-- SIGN UP PANEL -->
+  <div class="mm-panel" id="mm-signup">
+    <span class="mm-h1">Create Account</span>
+    <span class="mm-p">Join M&amp;M Logistics to track and manage your freight.</span>
+
+    <div class="mm-2col">
+      <div class="mm-field">
+        <span class="mm-lbl">First Name</span>
+        <div class="mm-ibox">
+          <span class="mm-ico">&#128100;</span>
+          <input type="text" placeholder="John">
+        </div>
+      </div>
+      <div class="mm-field">
+        <span class="mm-lbl">Last Name</span>
+        <div class="mm-ibox">
+          <span class="mm-ico">&#128100;</span>
+          <input type="text" placeholder="Doe">
+        </div>
+      </div>
+    </div>
+
+    <div class="mm-field">
+      <span class="mm-lbl">Email Address</span>
+      <div class="mm-ibox">
+        <span class="mm-ico">&#9993;</span>
+        <input type="email" placeholder="you@company.com">
+      </div>
+    </div>
+
+    <div class="mm-field">
+      <span class="mm-lbl">Phone Number</span>
+      <div class="mm-ibox">
+        <span class="mm-ico">&#128222;</span>
+        <input type="tel" placeholder="+1 (555) 000-0000">
+      </div>
+    </div>
+
+    <div class="mm-field">
+      <span class="mm-lbl">Password</span>
+      <div class="mm-ibox">
+        <span class="mm-ico">&#128274;</span>
+        <input type="password" id="spw" placeholder="Min. 8 characters" oninput="mmStr(this)">
+        <button class="mm-eye" onclick="mmEye('spw',this)" type="button">&#128065;</button>
+      </div>
+      <div class="mm-str" id="mm-strwrap">
+        <div class="mm-strbar"><div class="mm-strfill" id="mm-strfill"></div></div>
+        <span class="mm-strtxt" id="mm-strtxt"></span>
+      </div>
+    </div>
+
+    <div class="mm-field">
+      <span class="mm-lbl">Confirm Password</span>
+      <div class="mm-ibox">
+        <span class="mm-ico">&#128274;</span>
+        <input type="password" id="cpw" placeholder="Repeat your password">
+        <button class="mm-eye" onclick="mmEye('cpw',this)" type="button">&#128065;</button>
+      </div>
+    </div>
+
+    <div class="mm-terms">
+      <input type="checkbox">
+      <span>I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a> of M&amp;M Logistics.</span>
+    </div>
+
+    <button class="mm-btn" type="button">Create My Account</button>
+
+    <div class="mm-div"><span>or</span></div>
+    <span class="mm-sw">Have an account? <a onclick="mmSwitch('login')">Sign in &#8594;</a></span>
+  </div>
+
+  <span class="mm-foot">&#169; 2026 M&amp;M Logistics &#183; support@mmlogistics.com</span>
+
+</div>
+</div>
+
+<script>
+function mmSwitch(t) {
+  document.querySelectorAll('.mm-panel').forEach(function(p){ p.classList.remove('on'); });
+  document.querySelectorAll('.mm-tab').forEach(function(b){ b.classList.remove('on'); });
+  document.getElementById('mm-' + t).classList.add('on');
+  var tabs = document.querySelectorAll('.mm-tab');
+  if (t === 'login') tabs[0].classList.add('on');
+  else tabs[1].classList.add('on');
+}
+
+function mmEye(id, btn) {
+  var i = document.getElementById(id);
+  if (i.type === 'password') { i.type = 'text'; btn.innerHTML = '&#128580;'; }
+  else { i.type = 'password'; btn.innerHTML = '&#128065;'; }
+}
+
+function mmStr(inp) {
+  var v = inp.value;
+  var fill = document.getElementById('mm-strfill');
+  var txt = document.getElementById('mm-strtxt');
+  var wrap = document.getElementById('mm-strwrap');
+  if (!v) { wrap.classList.remove('on'); return; }
+  wrap.classList.add('on');
+  var s = 0;
+  if (v.length >= 8) s++;
+  if (/[A-Z]/.test(v)) s++;
+  if (/[0-9]/.test(v)) s++;
+  if (/[^A-Za-z0-9]/.test(v)) s++;
+  var lvls = [{p:'25%',c:'#e05555',l:'Weak'},{p:'50%',c:'#e09455',l:'Fair'},{p:'75%',c:'#d4c06a',l:'Good'},{p:'100%',c:'#2e7d52',l:'Strong'}];
+  var lv = lvls[s - 1] || lvls[0];
+  fill.style.width = lv.p;
+  fill.style.backgroundColor = lv.c;
+  txt.textContent = lv.l;
+  txt.style.color = lv.c;
+}
+</script>
+</body>
+</html>
